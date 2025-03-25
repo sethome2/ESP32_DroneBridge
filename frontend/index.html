@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html lang="zh-hans" xml:lang="zh-hans" xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name="description" content="Settings for DB for ESP32">
     <meta name="author" content="Wolfgang Christl">
@@ -25,7 +25,7 @@
 <div class="container">
     <form id="settings_form">
         <div>
-            <h2>Statistics</h2>
+            <h2>通讯统计</h2>
             <div class="row">
                 <div id="web_conn_status" class="six columns small_text">
                 </div>
@@ -36,15 +36,15 @@
             </div>
             <div class="row">
                 <div class="four columns">
-                    <label>received bytes serial port</label>
+                    <label>从串口接收到的字节数</label>
                     <div id="read_bytes">-</div>
                 </div>
                 <div class="four columns">
-                    <label>Connected TCP clients</label>
+                    <label>已连接的TCP客户端</label>
                     <div id="tcp_connected">-</div>
                 </div>
                 <div class="four columns">
-                    <label>Connected UDP clients</label>
+                    <label>已连接的UDP客户端</label>
                     <div style="display: flex" >
                         <div id="udp_connected" class="tooltip" style="width: fit-content"><span class="tooltiptext" id="tooltip_udp_clients">-</span>-</div>
                         <img class="img_button" style="margin-left: 5rem; padding: 0.2rem" height="20em" alt="add" src="add_16dp_icon.png" onclick="add_new_udp_client()"/>
@@ -54,40 +54,36 @@
             </div>
         </div>
         <div>
-            <h2>Settings</h2>
+            <h2>设置</h2>
             <h3>Wi-Fi</h3>
             <div class="row">
                 <div class="twelve columns">
-                    <label for="esp32_mode">ESP32 Mode</label>
+                    <label for="esp32_mode">ESP32工作模式</label>
                     <select id="esp32_mode" name="esp32_mode" form="settings_form" onchange="change_ap_ip_visibility()">
-                        <option value="1">Wi-Fi Access Point Mode</option>
-                        <option value="2">Wi-Fi Client Mode</option>
-                        <option value="3">Wi-Fi Access Point LR Mode</option>
-                        <option value="4">ESP-NOW LR Mode AIR</option>
-                        <option value="5">ESP-NOW LR Mode GND</option>
+                        <option value="1">Wi-Fi接入点</option>
+                        <option value="2">Wi-Fi客户端</option>
+                        <option value="3">Wi-Fi LR 长距离接入点</option>
+                        <option value="4">ESP-NOW LR 长距离通讯空中端</option>
+                        <option value="5">ESP-NOW LR 长距离通讯地面端</option>
                     </select>
-                    <div class="note" id="esp-lr-ap-disclaimer"><h4>Attention:</h4>
-                        LR Mode makes the device invisible for non-LR enabled devices!</br>You will not be able to change the config!</br></br>
-                        The data rate is reduced to ~0.25Mbps. The range may be increase by a factor of ~2.</br>Press the boot
-                        button (short press for AP-Mode with password "dronebridge" or long press for reset to defaults)
-                        or erase the flash memory of the ESP32 and re-flash DroneBridge for ESP32 to get back into
-                        normal Wi-Fi Mode!
+                    <div class="note" id="esp-lr-ap-disclaimer"><h4>警告:</h4>
+                        LR模式会使设备对不支持LR的设备不可见！</br>您将无法更改配置！</br></br> 数据速率会降低到约0.25Mbps。范围可能会增加约2倍。</br>按下启动按钮（短按进入带密码“dronebridge”的AP模式，或长按恢复默认设置），</br>或者擦除ESP32的闪存并重新刷写DroneBridge固件，以恢复到正常的Wi-Fi模式！
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="six columns" id="wifi_ssid_div">
-                    <label for="wifi_ssid">SSID</label>
+                    <label for="wifi_ssid">Wi-Fi名称</label>
                     <input type="text" name="wifi_ssid" value="" id="wifi_ssid" maxlength="31">
                 </div>
                 <div class="six columns">
-                    <label for="wifi_pass">Password</label>
+                    <label for="wifi_pass">Wi-Fi密码</label>
                     <input type="text" name="wifi_pass" value="" id="wifi_pass" minlength="8" maxlength="63" required>
                 </div>
             </div>
             <div class="row">
                 <div id="ap_channel_div" class="six columns">
-                    <label for="ap_channel">Channel</label>
+                    <label for="ap_channel">Wi-Fi信号通道</label>
                     <select id="ap_channel" name="ap_channel" form="settings_form">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -105,7 +101,7 @@
                     </select>
                 </div>
                 <div class="six columns" id="ap_ip_div">
-                    <label for="ap_ip">Gateway IP address</label>
+                    <label for="ap_ip">网关IP地址</label>
                     <input type="text" name="ap_ip" value="" id="ap_ip">
                 </div>
             </div>
@@ -113,7 +109,7 @@
                 <div class="twelve columns">
                     <div class="checkbox-wrapper-14">
                         <input id="wifi_en_gn" name="wifi_en_gn" type="checkbox" class="switch">
-                        <label class="tooltip" for="wifi_en_gn"><span class="tooltiptext">Only enable this when you need b/g/n support. When off there is only 802.11 b support in WiFi client mode which provides sufficient bandwidth and is ideal for range.</span>802.11 b/g/n support</label>
+                        <label class="tooltip" for="wifi_en_gn"><span class="tooltiptext">仅在需要 b/g/n 支持时启用此选项。关闭时，WiFi客户端模式下仅支持 802.11 b，这已提供足够的带宽，并且更适合长距离通信。</span>802.11 b/g/n 支持</label>
                     </div>
                 </div>
             </div>
@@ -136,42 +132,42 @@
             <h3 style="margin-top: 2rem">Serial</h3>
             <div class="row" id="tx_rx_div">
                 <div class="six columns">
-                    <label for="tx_pin">UART TX GPIO</label>
+                    <label for="tx_pin">UART TX引脚</label>
                     <input type="number" name="tx_pin" value="" id="tx_pin">
                 </div>
                 <div class="six columns">
-                    <label for="rx_pin">UART RX GPIO</label>
+                    <label for="rx_pin">UART RX引脚</label>
                     <input type="number" name="rx_pin" value="" id="rx_pin">
                 </div>
             </div>
             <div class="row" id="rts_cts_div">
                 <div class="six columns">
-                    <label for="rts_pin">UART RTS GPIO</label>
+                    <label for="rts_pin">UART RTS引脚</label>
                     <input type="number" name="rts_pin" value="" id="rts_pin" onchange="flow_control_check()">
                 </div>
                 <div class="six columns">
-                    <label for="cts_pin">UART CTS GPIO</label>
+                    <label for="cts_pin">UART CTS引脚</label>
                     <input type="number" name="cts_pin" value="" id="cts_pin" onchange="flow_control_check()">
                 </div>
             </div>
             <div class="row" id="rts_thresh_div">
                 <div class="six columns">
-                    <label for="rts_thresh">UART RTS threshold</label>
+                    <label for="rts_thresh">UART RTS阈值</label>
                     <input type="number" id="rts_thresh" name="rts_thresh" min="1" max="128">
                 </div>
             </div>
             <div class="row">
                 <div class="six columns">
-                    <label for="telem_proto">UART serial protocol</label>
+                    <label for="telem_proto">UART 控制协议</label>
                     <select id="telem_proto" name="telem_proto" form="settings_form"
                             onchange="change_msp_ltm_visibility()">
                         <option value="1">MSP/LTM</option>
                         <option value="4">MAVLink</option>
-                        <option value="5">Transparent</option>
+                        <option value="5">透明传输/Transparent</option>
                     </select>
                 </div>
                 <div class="six columns" id="baud_div">
-                    <label for="baud">UART baud</label>
+                    <label for="baud">UART 波特率</label>
                     <select name="baud" id="baud" form="settings_form">
                         <option value="5000000">5000000</option>
                         <option value="1500000">3000000</option>
@@ -198,7 +194,7 @@
             </div>
             <div id="msp_ltm_div" class="row">
                 <div class="twelve columns">
-                    <label for="ltm_pp">LTM frames per packet</label>
+                    <label for="ltm_pp">LTM帧数每数据包</label>
                     <select id="ltm_pp" name="ltm_pp" form="settings_form">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -211,7 +207,7 @@
             </div>
             <div id="trans_pack_size_div" class="row">
                 <div class="six columns">
-                    <label for="trans_pack_size">Maximum packet size</label>
+                    <label for="trans_pack_size">最大数据包大小</label>
                     <select id="trans_pack_size" name="trans_pack_size" form="settings_form">
                         <option value="16">16</option>
                         <option value="32">32</option>
@@ -223,7 +219,7 @@
                     </select>
                 </div>
                 <div class="six columns">
-                    <label for="serial_timeout">Serial read timeout [ms]</label>
+                    <label for="serial_timeout">串口读取超时时间 单位：毫秒</label>
                     <input type="number" id="serial_timeout" name="serial_timeout" min="1" max="65535" value="50">
                 </div>
             </div>
@@ -234,7 +230,7 @@
     </form>
     <div class="row">
         <div class="six columns">
-            <button class="button-primary" onclick="save_settings()">Save Settings & Reboot</button>
+            <button class="button-primary" onclick="save_settings()">保存并重启</button>
         </div>
     </div>
 </div>
@@ -242,7 +238,7 @@
     <div id="esp_mac" style="margin-top: 1rem" class="row small_text"></div>
     <div id="about" class="row">DroneBridge for ESP32 - waiting for a response from the ESP32
     </div>
-    <div style="margin-bottom: 2rem" class="row">&copy; Wolfgang Christl 2018 - Apache 2.0 License</div>
+    <div style="margin-bottom: 2rem" class="row">&copy; Sethome &copy; Wolfgang Christl 2018 - Apache 2.0 License</div>
 </div>
 <script>
     // get settings once upon page load

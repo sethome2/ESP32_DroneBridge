@@ -74,11 +74,11 @@
 #define DB_DEFAULT_UART_BAUD_RATE 115200
 #elif CONFIG_DB_GENERIC_BOARD
 // initially set pins to 0 to allow the start of the system on all boards. User has to set the correct pins
-#define DB_DEFAULT_UART_TX_PIN GPIO_NUM_0
-#define DB_DEFAULT_UART_RX_PIN GPIO_NUM_0
-#define DB_DEFAULT_UART_RTS_PIN GPIO_NUM_0
-#define DB_DEFAULT_UART_CTS_PIN GPIO_NUM_0
-#define DB_DEFAULT_UART_BAUD_RATE 57600
+#define DB_DEFAULT_UART_TX_PIN GPIO_NUM_8
+#define DB_DEFAULT_UART_RX_PIN GPIO_NUM_9
+#define DB_DEFAULT_UART_RTS_PIN GPIO_NUM_20
+#define DB_DEFAULT_UART_CTS_PIN GPIO_NUM_10
+#define DB_DEFAULT_UART_BAUD_RATE 115200
 #else
 // someone fucked up the config - fallback to generic config
 #define DB_DEFAULT_UART_TX_PIN GPIO_NUM_0

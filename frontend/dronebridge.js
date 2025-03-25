@@ -82,9 +82,9 @@ function flow_control_check() {
 	let rts_pin = document.getElementById("rts_pin");
 	let cts_pin = document.getElementById("cts_pin");
 	if (isNaN(rts_pin.value) || isNaN(cts_pin.value) || cts_pin.value === '' || rts_pin.value === '' || rts_pin.value === cts_pin.value) {
-		show_toast("UART flow control disabled.")
+		show_toast("UART流控已禁用。")
 	} else {
-		show_toast("UART flow control enabled. Make sure RTS & CTS pins are connected!");
+		show_toast("UART流控已启用。请确保RTS和CTS引脚已连接！");
 	}
 }
 
@@ -216,9 +216,9 @@ function get_system_info() {
 
 function update_conn_status() {
 	if (conn_status)
-		document.getElementById("web_conn_status").innerHTML = "<span class=\"dot_green\"></span> connected to ESP32"
+		document.getElementById("web_conn_status").innerHTML = "<span class=\"dot_green\"></span> 网页已连接到ESP32"
 	else {
-		document.getElementById("web_conn_status").innerHTML = "<span class=\"dot_red\"></span> disconnected from ESP32"
+		document.getElementById("web_conn_status").innerHTML = "<span class=\"dot_red\"></span> 网页未连接到ESP32"
 		document.getElementById("current_client_ip").innerHTML = ""
 	}
 	if (conn_status !== old_conn_status) {
@@ -280,22 +280,22 @@ function get_stats() {
 
 		let udp_clients = parseInt(json_data["udp_connected"])
 		if (!isNaN(udp_clients) && udp_clients === 1) {
-			document.getElementById("udp_connected").innerHTML = "<span class=\"tooltiptext\" id=\"tooltip_udp_clients\">"+udp_clients_string+"</span>" + udp_clients + " client"
+			document.getElementById("udp_connected").innerHTML = "<span class=\"tooltiptext\" id=\"tooltip_udp_clients\">"+udp_clients_string+"</span>" + udp_clients + " 个客户端"
 		} else if (!isNaN(udp_clients)) {
-			document.getElementById("udp_connected").innerHTML = "<span class=\"tooltiptext\" id=\"tooltip_udp_clients\">"+udp_clients_string+"</span>" + udp_clients + " clients"
+			document.getElementById("udp_connected").innerHTML = "<span class=\"tooltiptext\" id=\"tooltip_udp_clients\">"+udp_clients_string+"</span>" + udp_clients + " 个客户端"
 		}
 
 		if ('esp_rssi' in json_data) {
 			let rssi = parseInt(json_data["esp_rssi"])
 			if (!isNaN(rssi) && rssi < 0) {
-				document.getElementById("current_client_ip").innerHTML = "IP Address: " + json_data["current_client_ip"] + "<br />RSSI: " + rssi + "dBm"
+				document.getElementById("current_client_ip").innerHTML = "IP 地址: " + json_data["current_client_ip"] + "<br />RSSI信号强度: " + rssi + "dBm"
 			} else if (!isNaN(rssi)) {
-				document.getElementById("current_client_ip").innerHTML = "IP Address: " + json_data["current_client_ip"]
+				document.getElementById("current_client_ip").innerHTML = "IP 地址: " + json_data["current_client_ip"]
 			}
 		} else if ('connected_sta' in json_data) {
 			let a = ""
 			json_data["connected_sta"].forEach((item) => {
-				a = a + "Client: " + item.sta_mac + " RSSI: " + item.sta_rssi + "dBm<br />"
+				a = a + "Client: " + item.sta_mac + " RSSI信号强度: " + item.sta_rssi + "dBm<br />"
 			});
 			document.getElementById("current_client_ip").innerHTML = a
 		}
@@ -339,10 +339,10 @@ function get_settings() {
 }
 
 function add_new_udp_client() {
-	let ip = prompt("Please enter the IP address of the UDP receiver", "192.168.2.X");
-	let port = prompt("Please enter the port number of the UDP receiver", "14550");
+	let ip = prompt("请输入UDP接收器的IP地址", "192.168.2.X");
+	let port = prompt("请输入UDP接收器的端口号", "14550");
 	port = parseInt(port);
-	let save_to_nvm = confirm("Save this UDP client to the permanent storage so it will be auto added after reboot/reset?\nYou can only save one UDP client to the memory. The old ones will be overwritten.\nSelect no if you only want to add this client for this session.");
+	let save_to_nvm = confirm("将此UDP客户端保存到永久存储中，以便在重启/重置后自动添加？\n您只能将一个UDP客户端保存到内存中，旧的将被覆盖。\n选择“否”仅在本次会话中添加此客户端。");
 	const ippattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
 	if (ip != null && port != null && ippattern.test(ip)) {
@@ -359,12 +359,12 @@ function add_new_udp_client() {
 			show_toast(error.message);
 		});
 	} else {
-		show_toast("Error: Enter valid IP and port!")
+		show_toast("错误：请输入有效的IP和端口！")
 	}
 }
 
 async function clear_udp_clients() {
-	if (confirm("Do you want to remove all UDP connections?\nGCS will have to re-connect.") === true) {
+	if (confirm("您是否要移除所有UDP连接？\n地面控制站（GCS）将需要重新连接。") === true) {
 		let post_url = ROOT_URL + "api/settings/clients/clear_udp";
 		const response = await fetch(post_url, {
 			method: 'DELETE',
@@ -409,7 +409,7 @@ function check_validity() {
 	let valid = true;
 	let wifi_pass = document.getElementById("wifi_pass")
 	if (!wifi_pass.checkValidity()) {
-		show_toast("Error: 8<(password length)<64");
+		show_toast("错误：密码长度应在8到64之间");
 		valid = false;
 	}
 	return valid;
@@ -428,6 +428,6 @@ function save_settings() {
 			show_toast(error.message);
 		});
 	} else {
-		console.log("Form was not filled out correctly.")
+		console.log("保存的设置有误。")
 	}
 }
